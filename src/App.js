@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
-           <img src={logo} class="logo"/>
+          <img src={logo} className="logo"/>
         <Navbar.Brand href="/">520bs</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="/login">Log in</Nav.Link>
