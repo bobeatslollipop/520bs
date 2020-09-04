@@ -3,27 +3,35 @@ import { Container, Row, Col, Navbar, Nav, Form, FormControl, Button } from 'rea
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import { UserOutlined } from '@ant-design/icons'
 
 import Login from './Containers/Login'
 import Home from './Containers/Home'
 import Signup from './Containers/Signup'
 import NotFound from './Containers/NotFound'
 import logo from './logo.svg'
+import UserCenter from './Containers/UserCenter';
+import FrontPage from './Containers/FrontPage'
+import { Auth } from './firebase';
 
 function App() {
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
+        <Container>
           <img src={logo} className="logo"/>
-        <Navbar.Brand href="/">520bs</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link href="/login">Log in</Nav.Link>
-          <Nav.Link href="/signup">Sign up</Nav.Link>
-        </Nav>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-info">Search</Button>
-        </Form>
+          <Navbar.Brand href="/">520bs</Navbar.Brand>
+          <Nav className="mr-auto">
+            <Nav.Link href="/login">Log in</Nav.Link>
+            <Nav.Link href="/signup">Sign up</Nav.Link>
+          </Nav>
+          <Nav className="mr-right">
+            <Nav.Link href="/usercenter">
+              User center
+              <UserOutlined style={{ color: 'white', fontSize: "1.5em" }} className="userCenterIcon"/>
+            </Nav.Link>
+          </Nav>
+        </Container>
       </Navbar>
 
       <Router>
@@ -37,9 +45,11 @@ function App() {
 function Routes(appProps) {
   return (
     <Switch>
-      <Route exact path="/" render={(props) => <Home {...props} {...appProps} />}/>
+      <Route exact path="/" render={(props) => Auth.currentUser ? 
+        <Home {...props} {...appProps} /> : <FrontPage {...props} {...appProps} /> }/>
       <Route exact path="/login" render={(props) => <Login {...props} {...appProps} />}/>
       <Route exact path="/signup" render={(props) => <Signup {...props} {...appProps} />}/>
+      <Route exact path="/usercenter" render={(props) => <UserCenter {...props} {...appProps} />}/>
 
       { /* Finally, catch all unmatched routes */ }
       <Route component={NotFound} />

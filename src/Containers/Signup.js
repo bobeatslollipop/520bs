@@ -49,7 +49,7 @@ export default function Signup(props) {
 
     }).then(() => {
       alert("User '" +fields.name + "' created with email '" + fields.email +"'");
-      props.history.push("/");
+      props.history.replace("/");
     })
     .catch(e => {
       console.error("Error storing data; " + e);

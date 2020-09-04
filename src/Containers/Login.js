@@ -10,7 +10,6 @@ export default function Login(props) {
 
   Auth.onAuthStateChanged(() => {
     if (Auth.currentUser) {
-      alert("Logged in as " + Auth.currentUser.email);
       props.history.replace('/');
     }
   });

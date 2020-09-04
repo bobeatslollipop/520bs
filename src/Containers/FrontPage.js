@@ -5,7 +5,7 @@ export default function Home(props) {
   return (
     <Jumbotron>
       <Container>
-        <h1>This is the home page after you log in.</h1>
+        <h1>This is the front page before you log in.</h1>
         <p>Nothing is here yet.</p>
       </Container>
     </Jumbotron>
