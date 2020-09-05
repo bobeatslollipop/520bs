@@ -3,18 +3,18 @@ import Requests from './Requests'
 
 //In real practice, every user should have his own object
 export default function Request() {
-    // var Chance = require('chance');
-    // var chance = new Chance();
+    var Chance = require('chance');
+    var chance = new Chance();
 
     const [state, setState] = useState({
         requests: [],
     });
 
     //In real practice, it should take in a request object
-    function addRequest()  {
+    function addRequest(name, accuracy)  {
         const newRequest = {
             // id: chance.name(),
-            id: "fakeName",
+            id: chance.name(),
             accu: Math.floor((Math.random() * 100) + 1) + "%"
         }
         setState({requests: [...state.requests, newRequest]})
@@ -32,7 +32,7 @@ export default function Request() {
         <div>
             <h1>This is Request Page
             </h1>
-            <buttun style = {btnStyle} onClick = {addRequest}>Add Request</buttun>
+            <buttun style = {btnStyle} onClick = {addRequest}>Generate Request</buttun>
             <Requests requests = {state.requests}
                       delRequest = {delRequest}/>
         </div>
