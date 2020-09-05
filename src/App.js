@@ -13,6 +13,7 @@ import logo from './logo.svg'
 import UserCenter from './Containers/UserCenter';
 import FrontPage from './Containers/FrontPage'
 import { Auth } from './firebase';
+import Request from './Containers/Request'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Nav className="mr-auto">
             <Nav.Link href="/login">Log in</Nav.Link>
             <Nav.Link href="/signup">Sign up</Nav.Link>
+            <Nav.Link href="/request">Request</Nav.Link>
           </Nav>
           <Nav className="mr-right">
             <Nav.Link href="/usercenter">
@@ -50,7 +52,9 @@ function Routes(appProps) {
       <Route exact path="/login" render={(props) => <Login {...props} {...appProps} />}/>
       <Route exact path="/signup" render={(props) => <Signup {...props} {...appProps} />}/>
       <Route exact path="/usercenter" render={(props) => <UserCenter {...props} {...appProps} />}/>
-
+      <Route exact path="/request" render={(props) => <Request {...props} {...appProps} />}/>
+      
+      
       { /* Finally, catch all unmatched routes */ }
       <Route component={NotFound} />
       
