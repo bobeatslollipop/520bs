@@ -72,7 +72,6 @@ function NavLoggedIn() {
           <Nav.Link href="/request" className="NavItem">Friends</Nav.Link>
           <Nav.Link href="/match" className="NavItem">Match</Nav.Link>
           <Nav.Link href="/matchuser" className="NavItem">Guess</Nav.Link>
-          <Nav.Link href="/friends" className="NavItem">Friends</Nav.Link>
         </Nav>
         <Nav className="mr-right">
           <Nav.Link href="/usercenter" className="NavItem">
