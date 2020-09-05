@@ -30,10 +30,15 @@ function App() {
       <Switch>
         <Route exact path="/" render={(props) => user ? 
           <Home {...props} {...appProps} /> : <FrontPage {...props} {...appProps} /> }/>
-        <Route exact path="/login" render={(props) => <Login {...props} {...appProps} />}/>
-        <Route exact path="/signup" render={(props) => <Signup {...props} {...appProps} />}/>
-        <Route exact path="/usercenter" render={(props) => <UserCenter {...props} {...appProps} />}/>
-        <Route exact path="/request" render={(props) => <Request {...props} {...appProps} />}/>
+        <Route exact path="/login" render={(props) => user ? 
+          <AlreadyLoggedIn {...props} {...appProps} /> : <Login {...props} {...appProps} />}/>
+        <Route exact path="/signup" render={(props) => user ?
+          <AlreadyLoggedIn {...props} {...appProps} /> : <Signup {...props} {...appProps} />}/>
+        <Route exact path="/usercenter" render={(props) => user ? 
+          <UserCenter {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />} />
+        <Route exact path="/request" render={(props) => user ?
+          <Request {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>
+
         <Route exact path="/alreadyloggedin" render={(props) => <AlreadyLoggedIn {...props} {...appProps} />}/>
         <Route exact path="/notloggedin" render={(props) => <NotLoggedIn {...props} {...appProps} />}/>
         

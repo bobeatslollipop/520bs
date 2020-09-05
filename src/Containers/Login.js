@@ -29,7 +29,7 @@ export default function Login(props) {
 
   return (
     <div className="Login">
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="email" bsSize="large">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -54,7 +54,7 @@ export default function Login(props) {
             >
             Login
             </Button>
-      </form>
+      </Form>
     </div>
   );
 }

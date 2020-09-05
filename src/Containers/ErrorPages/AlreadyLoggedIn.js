@@ -23,7 +23,7 @@ export default function NotFound(props) {
             </p>
             <br/>
             <p>
-              Redirecting to front page in {counter} seconds...
+              Redirecting to home page in {counter} seconds...
             </p>
         </Container>
       </Jumbotron>

@@ -122,7 +122,7 @@ export default function UserCenter(props) {
 
           <Form.Group controlId="formGridMajor">
             <Form.Label>Major</Form.Label>
-            <Select options={Countries} placeholder={props.userMajor} onChange={e=>{setMajor(e.target.value);}} />
+            <Select options={Countries} placeholder={props.userMajor} />
           </Form.Group>
 
           <Form.Group controlId="formGridIntroduction">
