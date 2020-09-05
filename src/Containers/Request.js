@@ -3,8 +3,8 @@ import Requests from './Requests'
 
 //In real practice, every user should have his own object
 export default function Request() {
-    var Chance = require('chance');
-    var chance = new Chance();
+    // var Chance = require('chance');
+    // var chance = new Chance();
 
     const [state, setState] = useState({
         requests: [],
@@ -13,7 +13,8 @@ export default function Request() {
     //In real practice, it should take in a request object
     function addRequest()  {
         const newRequest = {
-            id: chance.name(),
+            // id: chance.name(),
+            id: "fakeName",
             accu: Math.floor((Math.random() * 100) + 1) + "%"
         }
         setState({requests: [...state.requests, newRequest]})
