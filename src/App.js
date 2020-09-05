@@ -16,6 +16,8 @@ import Request from './Containers/Request'
 import NotFound from './Containers/ErrorPages/NotFound'
 import AlreadyLoggedIn from './Containers/ErrorPages/AlreadyLoggedIn'
 import NotLoggedIn from './Containers/ErrorPages/NotLoggedIn'
+import Match from './Containers/Match';
+import MatchUser from './Containers/MatchUser';
 
 export default function App() {
   const [user, setUser] = useState(Auth.currentUser)
@@ -37,7 +39,10 @@ export default function App() {
           <UserCenter {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />} />
         <Route exact path="/request" render={(props) => user ?
           <Request {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>
-        
+        <Route exact path="/match" render={(props) => user ?
+          <Match {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>    
+        <Route exact path="/matchuser" render={(props) => user ?
+          <MatchUser {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>   
         { /* Finally, catch all unmatched routes */ }
         <Route component={NotFound} />
         
@@ -65,6 +70,8 @@ function NavLoggedIn() {
         <Nav className="mr-auto">
           <Nav.Link href="/request" className="NavItem">Requests</Nav.Link>
           <Nav.Link href="/request" className="NavItem">Friends</Nav.Link>
+          <Nav.Link href="/match" className="NavItem">Match</Nav.Link>
+          <Nav.Link href="/matchuser" className="NavItem">Guess</Nav.Link>
         </Nav>
         <Nav className="mr-right">
           <Nav.Link href="/usercenter" className="NavItem">

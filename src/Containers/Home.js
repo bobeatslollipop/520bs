@@ -26,16 +26,14 @@ export default function Home(props) {
           <button onClick = {()=>setRW(false)}>Close</button>
         </Modal>
 
-        <Modal isOpen={matchWindow} onRequestClose={() => setMW(false)}>
-          <h1>Opps!</h1>
-          <p>The Match Functionality is still under deverlopment!</p>
-          <button onClick = {()=>setMW(false)}>Close</button>
+        <Modal isOpen={contactWindow} onRequestClose={() => setCW(false)}>
+          <Nav.Link href="/request" className="NavItem">Friends</Nav.Link>
+          <button onClick = {()=>setCW(false)}>Close</button>
         </Modal>
 
-        <Modal isOpen={contactWindow} onRequestClose={() => setCW(false)}>
-          <h1>Opps!</h1>
-          <p>You have no friends!</p>
-          <button onClick = {()=>setCW(false)}>Close</button>
+        <Modal isOpen={matchWindow} onRequestClose={() => setMW(false)}>
+          <button href="/match">Start Match</button>
+          <button onClick = {()=>setMW(false)}>Close</button>
         </Modal>
 
       </Jumbotron>
