@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,21 +11,46 @@ import Signup from './Containers/Signup'
 import logo from './logo.svg'
 import UserCenter from './Containers/UserCenter';
 import FrontPage from './Containers/FrontPage'
-import { Auth } from './firebase';
+import { Auth, getUserById } from './firebase';
 import Request from './Containers/Request'
 import NotFound from './Containers/ErrorPages/NotFound'
 import AlreadyLoggedIn from './Containers/ErrorPages/AlreadyLoggedIn'
 import NotLoggedIn from './Containers/ErrorPages/NotLoggedIn'
 import Match from './Containers/Match';
-import MatchUser from './Containers/MatchUser';
+import MatchUser from './Containers/Guess';
 import Friends from './Containers/Friends';
 
 export default function App() {
-  const [user, setUser] = useState(Auth.currentUser)
+  const [isLoading, setIsLoading] = useState(true)
+  var user = Auth.currentUser;
+  const emptydata = {
+    name: null,
+    email: null,
+    gender: null,
+    introduction: null
+  };
+  const [data, setData] = useState(emptydata)
+
   Auth.onAuthStateChanged(() => {
-    if (Auth.currentUser !== user)
-      setUser(Auth.currentUser);
+    if (Auth.currentUser !== user) {
+      user = Auth.currentUser;
+      setIsLoading(true);
+    }
   });
+
+  useEffect(() => {console.log("I'm here")
+    if (user != null) {
+      getUserById(user.email)
+      .then(doc => {
+        setIsLoading(false)
+        setData(doc);
+      }).catch(err => alert(err));
+    } else {
+      setIsLoading(false)
+  }}, [isLoading]);
+
+  console.log(user)
+  console.log(isLoading)
 
   function Routes(appProps) {
     return (
@@ -44,7 +69,7 @@ export default function App() {
           <Friends {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>
         <Route exact path="/match" render={(props) => user ?
           <Match {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>    
-        <Route exact path="/matchuser" render={(props) => user ?
+        <Route exact path="/guess" render={(props) => user ?
           <MatchUser {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>   
         { /* Finally, catch all unmatched routes */ }
         <Route component={NotFound} />
@@ -53,12 +78,12 @@ export default function App() {
     );
   }
   
-  return (
+  return ( !isLoading &&
     <div className="App">
       {user ? <NavLoggedIn /> : <NavNotLoggedIn />}
 
       <Router>
-        <Routes />
+        <Routes name={data.name} email={data.email} gender={data.gender} introduction={data.intro} />
       </Router>
     </div>
   );
@@ -69,12 +94,12 @@ function NavLoggedIn() {
     <Navbar bg="dark" variant="dark">
       <Container>
         <img src={logo} className="logo"/>
-        <Navbar.Brand href="/">520bs</Navbar.Brand>
+        <Navbar.Brand href="/">Home</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="/request" className="NavItem">Requests</Nav.Link>
           <Nav.Link href="/friends" className="NavItem">Friends</Nav.Link>
           <Nav.Link href="/match" className="NavItem">Match</Nav.Link>
-          <Nav.Link href="/matchuser" className="NavItem">Guess</Nav.Link>
+          <Nav.Link href="/guess" className="NavItem">Guess</Nav.Link>
         </Nav>
         <Nav className="mr-right">
           <Nav.Link href="/usercenter" className="NavItem">
@@ -92,7 +117,7 @@ function NavNotLoggedIn() {
     <Navbar bg="dark" variant="dark">
       <Container>
         <img src={logo} className="logo"/>
-        <Navbar.Brand href="/">520bs</Navbar.Brand>
+        <Navbar.Brand href="/">Home</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="/login" className="NavItem">Log in</Nav.Link>
           <Nav.Link href="/signup" className="NavItem">Sign up</Nav.Link>

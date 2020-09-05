@@ -11,32 +11,32 @@ export default function Friends(props) {
       <Jumbotron>
         <h1 style={{marginBottom: "35px"}}>Friends</h1>
         <Row>
-          <Col><Card style={{ width: '18rem' }} >
+          <Col><Card style={{ width: '18rem', height: '30rem' }} >
               <Card.Img variant="top" src={profile1} />
               <Card.Body>
-                <Card.Title>Anxin Guo</Card.Title>
+                <Card.Title>Bob</Card.Title>
                 <Card.Text>
-                  The brief self introduction of Anxin Guo. 
+                  The brief self introduction of Bob. 
                 </Card.Text>
                 <Button variant="primary">Contact info</Button>
               </Card.Body>
           </Card></Col>
-          <Col><Card style={{ width: '18rem' }} >
+          <Col><Card style={{ width: '18rem', height: '30rem' }} >
               <Card.Img variant="top" src={profile2} />
               <Card.Body>
-                <Card.Title>Yining Huang</Card.Title>
+                <Card.Title>Sam</Card.Title>
                 <Card.Text>
-                  The brief self introduction of Yining Huang. 
+                  The brief self introduction of Sam. 
                 </Card.Text>
                 <Button variant="primary">Contact info</Button>
               </Card.Body>
           </Card></Col>
-          <Col><Card style={{ width: '18rem' }} >
+          <Col><Card style={{ width: '18rem', height: '30rem' }} >
               <Card.Img variant="top" src={profile3} />
               <Card.Body>
-                <Card.Title>Huaxuan Chen</Card.Title>
+                <Card.Title>Chen</Card.Title>
                 <Card.Text>
-                  The brief self introduction of Huaxuan Chen. 
+                  The brief self introduction of Chen. 
                 </Card.Text>
                 <Button variant="primary">Contact info</Button>
               </Card.Body>

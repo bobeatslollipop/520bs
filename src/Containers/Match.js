@@ -8,7 +8,7 @@ import Feedback from "react-bootstrap/esm/Feedback";
 import Select from "react-dropdown-select";
 import MultiSelect from "react-multi-select-component"
 import { getUserById } from '../firebase'
-import MatchUser from './MatchUser'
+import MatchUser from './Guess'
 
 
 export default function Match(props) {
@@ -20,11 +20,10 @@ export default function Match(props) {
   
   return (
     <Container style={{marginTop: "15px"}}>
-          <h1>Pick to Guess</h1>
-          <div><button onClick={()=>setBW(true)} >Bob</button></div>
-          <div><button onClick={()=>setHW(true)} >Huaxuan</button></div>
-          <div><button onClick={()=>setSW(true)} >Sam</button></div>
-
+      <Jumbotron>
+        <h1>Users that match you</h1>
+        <p>Names and stuff</p>
+      </Jumbotron>
     </Container>
   );
 

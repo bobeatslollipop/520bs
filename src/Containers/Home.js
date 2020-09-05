@@ -3,24 +3,67 @@ import Request from './Request'
 import Modal from 'react-modal'
 import firebase from './../firebase';
 import Match from "./Components/Match"
-import { Col, Row, Tab, Nav, Container, Jumbotron, Card, ListGroup, Form, Button, CardDeck } from "react-bootstrap";
+import { Col, Row, Nav, Container, Jumbotron, Card, ListGroup, Form, Button } from "react-bootstrap";
+import profile1 from './../profile4.jpg'
+import profile2 from './../profile5.jpg'
+import profile3 from './../profile6.jpg'
 
 export default function Home(props) {
   const [requestWindow, setRW] = useState(false)
   const [matchWindow, setMW] = useState(false)
   const [contactWindow, setCW] = useState(false)
-  
-  console.log(props)
+
+  const handleMore = () => props.history.replace('/match');
   
   return (
     <Container style={{marginTop: "15px"}}>
       <Jumbotron>
-        <Container>
-          <h1>You have logged in.</h1>
-          <div><button onClick={()=>setRW(true)}>Check Received Request</button></div>
-          <div><button onClick={()=>setCW(true)}>Check My Contact</button></div>
-          <div><button onClick={()=>setMW(true)}>Let's Match!</button></div>
-        </Container>
+        <Row>
+          <Col>
+            <h1>Welcome, {props.name}!</h1>
+          </Col>
+          <Col>
+            <Form inline>
+              <Form.Control type="text" placeholder="Search people" style={{width: "70%"}} />
+              <Button variant="success">Search</Button>
+            </Form>
+          </Col>
+        </Row>
+        <hr/>
+        <h2 style={{margin: '25px', marginLeft: '0'}}>People you might want to know</h2>
+        <Button style={{ float: 'right'}} onClick={handleMore}>More></Button>
+        <Row>
+          <Col><Card style={{ width: '18rem', height: '30rem' }} >
+              <Card.Img variant="top" src={profile1} />
+              <Card.Body>
+                <Card.Title>Dan</Card.Title>
+                <Card.Text>
+                  The brief self introduction of Dan. 
+                </Card.Text>
+                <Button variant="primary">Contact info</Button>
+              </Card.Body>
+          </Card></Col>
+          <Col><Card style={{ width: '18rem', height: '30rem' }} >
+              <Card.Img variant="top" src={profile2} />
+              <Card.Body>
+                <Card.Title>Tony</Card.Title>
+                <Card.Text>
+                  The brief self introduction of Tony. 
+                </Card.Text>
+                <Button variant="primary">Contact info</Button>
+              </Card.Body>
+          </Card></Col>
+          <Col><Card style={{ width: '18rem', height: '30rem' }} >
+              <Card.Img variant="top" src={profile3} />
+              <Card.Body>
+                <Card.Title>Andrew</Card.Title>
+                <Card.Text>
+                  The brief self introduction of Andrew. 
+                </Card.Text>
+                <Button variant="primary">Contact info</Button>
+              </Card.Body>
+          </Card></Col>
+        </Row>
 
         <Modal isOpen={requestWindow} onRequestClose={() => setRW(false)}>
           <Request/>

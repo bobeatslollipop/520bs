@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Requests from './Requests'
-import { Container, Jumbotron } from "react-bootstrap";
+import { Container, Jumbotron, Button } from "react-bootstrap";
 
 //In real practice, every user should have his own object
 export default function Request() {
@@ -32,9 +32,8 @@ export default function Request() {
     return (
       <Container style={{marginTop: "15px"}}>
         <Jumbotron>
-            <h1>This is Request Page
-            </h1>
-            <button style = {btnStyle} onClick = {addRequest}>Generate Request</button>
+            <h1>Requests</h1>
+            <Button style = {btnStyle} onClick = {addRequest}>Generate Request</Button>
             <Requests requests = {state.requests}
                       delRequest = {delRequest}/>
         </Jumbotron>

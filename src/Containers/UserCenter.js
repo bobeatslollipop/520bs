@@ -9,23 +9,6 @@ import { getUserById } from '../firebase'
 
 export default function UserCenter(props) {
 
-  const [isLoading, setIsLoading] = useState(true)
-  const [name, setName] = useState(null)
-  const [email, setEmail] = useState(null)
-  const [gender, setGender] = useState(null)
-  const [introduction, setIntroduction] = useState(null)
-
-  useEffect(() => {
-    getUserById(Auth.currentUser.email)
-    .then(doc => {
-      setName(doc.name);
-      setEmail(doc.email);
-      setGender(doc.gender);
-      setIntroduction(doc.intro);
-      setIsLoading(false);
-    }).catch(err => alert(err));
-  }, [])
-
   return (
     <Container>
       <Jumbotron style={{marginTop: "15px"}} className="UserCenter">
@@ -50,7 +33,7 @@ export default function UserCenter(props) {
 
                 <Tab.Pane eventKey="interests"><Interests /></Tab.Pane>
 
-                <Tab.Pane eventKey="personalities"><Interests /></Tab.Pane>
+                <Tab.Pane eventKey="personalities"><Personalities /></Tab.Pane>
 
                 <Tab.Pane eventKey="feedback"><Feedback /></Tab.Pane>
               </Tab.Content>
@@ -71,18 +54,17 @@ export default function UserCenter(props) {
   }
 
   function Profile() {
-    const [gend, setGend] = useState(gender ? gender : "");
-    const [intro, setIntro] = useState(introduction ? introduction : "");
+    const [gend, setGend] = useState(props.gender ? props.gender : "");
+    const [intro, setIntro] = useState(props.introduction ? props.introduction : "");
 
     function handleSubmit(e){
-      if (intro !== introduction || gend !== gender)
+      if (intro !== props.introduction || gend !== props.gender)
         db.collection("Users").doc(Auth.currentUser.email).update({gender: gend, intro: intro})
-        .then(window.location.reload())
+        .then(e => window.location.reload())
         .catch(e => alert(e));
     }
 
     return(
-      !isLoading &&
       <Container style={{backgroundColor: "white", borderRadius:"15px", padding: "15px"}}>
         <Container style={{textAlign: "center"}}>
           <p><strong>User Profile</strong></p>
@@ -92,11 +74,11 @@ export default function UserCenter(props) {
           <Form.Row>
             <Form.Group as={Col} controlId="formGridName">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="name" placeholder={name} disabled/>
+              <Form.Control type="name" placeholder={props.name} disabled/>
             </Form.Group>
             <Form.Group as={Col} controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder={email} disabled/>
+              <Form.Control type="email" placeholder={props.email} disabled/>
             </Form.Group> 
           </Form.Row>
 
@@ -105,7 +87,7 @@ export default function UserCenter(props) {
               <Form.Label>Gender</Form.Label>
               <Form.Control 
                 placeholder="It's the 21st century now, gender doesn't have to be selected"
-                value={gender}
+                value={gend}
                 onChange={e => setGend(e.target.value)}
               />
             </Form.Group>
@@ -141,7 +123,7 @@ export default function UserCenter(props) {
         // save changes
       }
 
-      // Make this an import
+      // Pre-set this for every field of interest. 
       const options = [
         { label: "Pop", value: 0},
         { label: "Hip hop", value: 1 }
@@ -163,7 +145,6 @@ export default function UserCenter(props) {
                 options={options}
                 value={selected}
                 onChange={setSelected}
-                labelledBy={"Select up to 5 items"}
               />
               <br/>
               <Form.Control as="textarea" rows="5" placeholder="Descriptions and examples and stuff"/>
@@ -192,6 +173,74 @@ export default function UserCenter(props) {
           <Col><FieldOfInterest field="Music" /></Col>
           <Col><FieldOfInterest field="Books" /></Col>
           <Col><FieldOfInterest field="Movies" /></Col>
+        </Row>
+
+      </Container>
+    );
+  }
+
+  function Personalities() {
+    function FieldOfInterest({field}) {
+      const [show, setShow] = useState(false);
+    
+      const handleClose = () => setShow(false);
+      const handleShow = () => setShow(true);
+      const handleSave = () => {
+        setShow(false);
+        // save changes
+      }
+
+      // Pre-set this for every field of interest. 
+      const options = [
+        { label: "Choice 1", value: 0},
+        { label: "Choice 2", value: 1 }
+      ]
+      const [selected, setSelected] = useState([]);
+    
+      return (
+        <>
+          <Button variant="primary" onClick={handleShow} block>
+            {field}
+          </Button>
+    
+          <Modal show={show} onHide={handleClose} size="lg" centered>
+            <Modal.Header closeButton>
+              <Modal.Title>{field}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Description of {field}. </p>
+              <p>More description of {field}. </p>
+              <MultiSelect
+                options={options}
+                value={selected}
+                onChange={setSelected}
+              />
+              <br/>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleSave}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      );
+    }
+
+    return (
+      <Container style={{backgroundColor:"white", borderRadius:"15px", padding: "15px"}}>
+        <Container style={{textAlign: "center"}}>
+          <p><strong>Your Interests</strong></p>
+        </Container>
+        <hr></hr>
+
+        <Row>
+          <Col><FieldOfInterest field="Question 1" /></Col>
+          <Col><FieldOfInterest field="Question 2" /></Col>
+          <Col><FieldOfInterest field="Question 3" /></Col>
         </Row>
 
       </Container>

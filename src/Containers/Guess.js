@@ -10,7 +10,7 @@ import MultiSelect from "react-multi-select-component"
 import { getUserById } from '../firebase'
 
 
-export default function MatchUser(props) {
+export default function Guess(props) {
 
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)
@@ -83,7 +83,7 @@ export default function MatchUser(props) {
     
           <Modal show={show} onHide={handleClose} size="lg" centered>
             <Modal.Header closeButton>
-              <Modal.Title>Select your favorite {field}!</Modal.Title>
+              <Modal.Title>Select your guess for {field}!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <MultiSelect
@@ -111,7 +111,7 @@ export default function MatchUser(props) {
     return (
       <Container style={{backgroundColor:"white", borderRadius:"15px", padding: "15px"}}>
         <Container style={{textAlign: "center"}}>
-          <p><strong>Your Interests</strong></p>
+          <p><strong>Her/his Interests</strong></p>
         </Container>
         <hr></hr>
 
