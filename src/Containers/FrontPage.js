@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { Col, Row, Tab, Nav, Container, Jumbotron, Card, ListGroup, Form, Button, CardDeck } from "react-bootstrap";
 
-export default function Home(props) {
+export default function FrontPage(props) {
   return (
-  <Container>
+    <Container style={{marginTop: "15px"}}>
     <Jumbotron>
       <h1>Front Page. Please Log In.</h1>
       <p>Nothing is here yet.</p>

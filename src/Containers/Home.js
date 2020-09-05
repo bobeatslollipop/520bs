@@ -12,7 +12,7 @@ export default function Home(props) {
   console.log(props)
   
   return (
-    <div>
+    <Container style={{marginTop: "15px"}}>
       <Jumbotron>
         <Container>
           <h1>You have logged in.</h1>
@@ -39,6 +39,6 @@ export default function Home(props) {
         </Modal>
 
       </Jumbotron>
-    </div>
+    </Container>
   );
 }

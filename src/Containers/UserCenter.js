@@ -7,12 +7,25 @@ import { LogoutOutlined } from "@ant-design/icons";
 import Feedback from "react-bootstrap/esm/Feedback";
 import Select from "react-dropdown-select";
 import MultiSelect from "react-multi-select-component"
+import { getUserById } from '../firebase'
 
 
 export default function UserCenter(props) {
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    getUserById(Auth.currentUser.email)
+    .then(doc => {
+      setData(doc);
+      setIsLoading(false);
+    }).catch(err => alert(err));
+  }, [])
+
   return (
     <Container>
-      <Jumbotron style={{marginTop: "25px"}} className="UserCenter">
+      <Jumbotron style={{marginTop: "15px"}} className="UserCenter">
         <h1 style={{textAlign: "center", marginBottom: "3%"}}>User Center</h1>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
           <Row>
@@ -20,19 +33,23 @@ export default function UserCenter(props) {
               <Nav variant="pills" className="flex-column">
                 <Nav.Link eventKey="first">User Profile</Nav.Link>
 
-                <Nav.Link eventKey="second" >你的人设</Nav.Link>
+                <Nav.Link eventKey="interests" >Your interests</Nav.Link>
 
-                <Nav.Link eventKey="third" >Feedback</Nav.Link>
+                <Nav.Link eventKey="personalities" >Your personalities</Nav.Link>
+
+                <Nav.Link eventKey="feedback" >Feedback</Nav.Link>
               </Nav>
             </Col>
             
             <Col sm={9}>
               <Tab.Content>
-                <Tab.Pane eventKey="first"><Profile/></Tab.Pane>
+                <Tab.Pane eventKey="first"><Profile /></Tab.Pane>
 
-                <Tab.Pane eventKey="second"><Information/></Tab.Pane>
+                <Tab.Pane eventKey="interests"><Interests /></Tab.Pane>
 
-                <Tab.Pane eventKey="third"><Feedback/></Tab.Pane>
+                <Tab.Pane eventKey="personalities"><Interests /></Tab.Pane>
+
+                <Tab.Pane eventKey="feedback"><Feedback /></Tab.Pane>
               </Tab.Content>
             </Col>
           </Row>
@@ -51,11 +68,8 @@ export default function UserCenter(props) {
   }
 
   function Profile() {
-    const [major, setMajor] = useState(null);
-    const [intro, setIntro] = useState(null);
-    const [residence, setResidence] = useState(null);
-    const [year, setYear] = useState(null);
-    const [zip, setZip] = useState(null);
+    const [gender, setGender] = useState("");
+    const [intro, setIntro] = useState("");
     const Countries = [
       { label: "Albania", value: 355 },
       { label: "Argentina", value: 54 },
@@ -67,66 +81,47 @@ export default function UserCenter(props) {
     ];
 
     function handleSubmit(e){
-      var msg="";
-      if (major != null){
-        console.log(major);
-        changeUserMajor(props.userEmail, major);
-        msg = msg + "Major ";
-      }
-      if (intro != null){
-        console.log(intro);
-        changeUserIntro(props.userEmail, intro);
-        msg = msg + "Intro "
-      }
-      if (residence != null){
-        console.log(residence);
-        changeUserResidence(props.userEmail, residence);
-        msg = msg + "Residence "
-      }
-      if (year != null){
-        console.log(year);
-      }
-      if (zip != null){
-        console.log(major);
-      }
-      if (msg!=""){
-        alert(msg + "Updated");
-      } else {
-        alert("Nothing Updated");
-        e.preventDefault();
-      }
-
+      //do stuff
     }
 
     return(
-      <Container style={{backgroundColor:"white", borderRadius:"15px", padding: "15px"}}>
+      !isLoading && 
+      <Container style={{backgroundColor: "white", borderRadius:"15px", padding: "15px"}}>
         <Container style={{textAlign: "center"}}>
           <p><strong>User Profile</strong></p>
         </Container>
         <hr></hr>
         <Form>
           <Form.Row>
-           <Form.Group as={Col} controlId="formGridName">
+            <Form.Group as={Col} controlId="formGridName">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="name" placeholder="Placeholder name" disabled/>
+              <Form.Control type="name" placeholder={data.name} disabled/>
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder={Auth.currentUser.email} disabled/>
+            <Form.Group as={Col} controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder={data.email} disabled/>
+            </Form.Group> 
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group as={Col} controlId="formGridGender">
+              <Form.Label>Gender</Form.Label>
+              <Form.Control 
+                placeholder="It's the 21st century now, gender doesn't have to be selected"
+                value={gender}
+                onChange={e => setGender(e.target.value)}
+              />
             </Form.Group>
           </Form.Row>
 
-          <Form.Group controlId="formGridMajor">
-            <Form.Label>Country of residence</Form.Label>
-            <Select options={Countries} placeholder={props.userMajor} />
-          </Form.Group>
-
           <Form.Group controlId="formGridIntroduction">
-            <Form.Label>Introduce Yourself</Form.Label>
+            <Form.Label>Briefly introduce yourself!</Form.Label>
             <Form.Control 
-            placeholder={props.userIntro}
-            onChange={e=>{setIntro(e.target.value);}}
-             />
+            as="textarea"
+            value={intro}
+            onChange={e => setIntro(e.target.value)}
+            rows="4"
+            />
           </Form.Group>
 
           <Form.Group id="formGridCheckbox">
@@ -136,7 +131,7 @@ export default function UserCenter(props) {
           <Button 
           variant="primary" 
           type="submit"
-          onClick={e =>{handleSubmit(e)}}>
+          onClick={handleSubmit}>
             Submit
           </Button>
         </Form>
@@ -144,7 +139,7 @@ export default function UserCenter(props) {
     );
   }
 
-  function Information() {
+  function Interests() {
     function FieldOfInterest({field}) {
       const [show, setShow] = useState(false);
     
@@ -161,7 +156,6 @@ export default function UserCenter(props) {
         { label: "Hip hop", value: 1 }
       ]
       const [selected, setSelected] = useState([]);
-      console.log(selected)
     
       return (
         <>
@@ -199,7 +193,7 @@ export default function UserCenter(props) {
     return (
       <Container style={{backgroundColor:"white", borderRadius:"15px", padding: "15px"}}>
         <Container style={{textAlign: "center"}}>
-          <p><strong>你的人设</strong></p>
+          <p><strong>Your Interests</strong></p>
         </Container>
         <hr></hr>
 
@@ -216,18 +210,7 @@ export default function UserCenter(props) {
   function Feedback() {
     const [feedback, setFeedback] = useState(null);
     function handleSubmit(e){
-      var msg="";
-      if (feedback != null){
-        console.log(feedback);
-        changeFeedback(props.userFeedback, feedback);
-        msg = msg + "Major ";
-      }
-      if (msg!=""){
-        alert(msg + "Updated");
-      } else {
-        alert("Nothing Updated");
-        e.preventDefault();
-      }
+      // do stuff
     }
     return(
       <Container style={{backgroundColor:"white", borderRadius:"15px", padding: "15px"}}>
@@ -239,8 +222,9 @@ export default function UserCenter(props) {
           <Form.Group controlId="formGridMajor">
             <Form.Label>Your Feedback</Form.Label>
             <Form.Control 
-            placeholder={props.userFeedback} 
-            onChange={e=>{setFeedback(e.target.value);}}
+              as="textarea" rows="5" 
+              placeholder="We'd love to hear your suggestions!"
+              onChange={e=>{setFeedback(e.target.value);}}
             />
           </Form.Group>
 

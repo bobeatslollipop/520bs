@@ -1,7 +1,7 @@
 import React from 'react';
 import { Jumbotron, Container } from 'react-bootstrap'
 
-export default function NotFound(props) {
+export default function NotLoggedIn(props) {
   const [counter, setCounter] = React.useState(5);
 
   React.useEffect(() => {
@@ -15,7 +15,7 @@ export default function NotFound(props) {
   }
 
   return(
-    <Container>
+    <Container style={{marginTop: "15px"}}>
       <Jumbotron>
         <h1>Oops!</h1>
         <p>

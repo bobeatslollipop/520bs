@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Jumbotron, Row, Col, Container } from "react-bootstrap";
 import "./Signup.css";
 import { Auth, db } from "../firebase"
 
@@ -45,8 +45,7 @@ export default function Signup(props) {
   function createUserData() {
     db.collection("Users").doc(fields.email).set({
       name: fields.name,
-      birthday: null,
-
+      email: fields.email
     }).then(() => {
       alert("User '" +fields.name + "' created with email '" + fields.email +"'");
       props.history.replace("/");
@@ -69,53 +68,61 @@ export default function Signup(props) {
       alert(e);
       setIsLoading(false);
     });
+
+    props.history.replace('/');
   }
 
   return (
-    <div className="Signup">
-      <form onSubmit={handleSubmit}>
-        <Form.Group controlId="name" bsSize="large">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            autoFocus
-            type="name"
-            value={fields.name}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="email" bsSize="large">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={fields.email}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="password" bsSize="large">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={fields.password}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="confirmPassword" bsSize="large">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            onChange={handleFieldChange}
-            value={fields.confirmPassword}
-          />
-        </Form.Group>
-        <Button
-          block
-          type="submit"
-          disabled={isLoading||!validateForm()}
-        >
-          Signup
-        </Button>
-      </form>
-    </div>
+    <Container style={{marginTop: "15px"}}>
+      <Jumbotron><Row>
+        <Col></Col>
+        <Col>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="name" bsSize="large">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                autoFocus
+                type="name"
+                value={fields.name}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="email" bsSize="large">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                autoFocus
+                type="email"
+                value={fields.email}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="password" bsSize="large">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={fields.password}
+                onChange={handleFieldChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="confirmPassword" bsSize="large">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                onChange={handleFieldChange}
+                value={fields.confirmPassword}
+              />
+            </Form.Group>
+            <Button
+              block
+              type="submit"
+              disabled={isLoading||!validateForm()}
+            >
+              Signup
+            </Button>
+          </Form>
+        </Col>
+        <Col></Col>
+      </Row></Jumbotron>
+    </Container>
   );
 }

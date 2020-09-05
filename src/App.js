@@ -63,10 +63,11 @@ function NavLoggedIn() {
         <img src={logo} className="logo"/>
         <Navbar.Brand href="/">520bs</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="/request">Request</Nav.Link>
+          <Nav.Link href="/request" className="NavItem">Requests</Nav.Link>
+          <Nav.Link href="/request" className="NavItem">Friends</Nav.Link>
         </Nav>
         <Nav className="mr-right">
-          <Nav.Link href="/usercenter">
+          <Nav.Link href="/usercenter" className="NavItem">
             User center
             <UserOutlined style={{ color: 'white', fontSize: "1.5em" }} className="userCenterIcon"/>
           </Nav.Link>
@@ -83,14 +84,8 @@ function NavNotLoggedIn() {
         <img src={logo} className="logo"/>
         <Navbar.Brand href="/">520bs</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="/login">Log in</Nav.Link>
-          <Nav.Link href="/signup">Sign up</Nav.Link>
-        </Nav>
-        <Nav className="mr-right">
-          <Nav.Link href="/usercenter">
-            User center
-            <UserOutlined style={{ color: 'white', fontSize: "1.5em" }} className="userCenterIcon"/>
-          </Nav.Link>
+          <Nav.Link href="/login" className="NavItem">Log in</Nav.Link>
+          <Nav.Link href="/signup" className="NavItem">Sign up</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

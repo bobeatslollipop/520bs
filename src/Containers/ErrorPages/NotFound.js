@@ -15,16 +15,16 @@ export default function NotFound(props) {
   }
 
   return(
-      <Jumbotron fluid>
-        <Container>
-          <h1>Oops!</h1>
-            <p>
-              The page you are looking for is not found!
-            </p>
-            <p>
-            Redirecting to front page in {counter} seconds...
+    <Container style={{marginTop: "15px"}}>
+      <Jumbotron>
+        <h1>Oops!</h1>
+          <p>
+            The page you are looking for is not found!
           </p>
-        </Container>
+          <p>
+          Redirecting to front page in {counter} seconds...
+        </p>
       </Jumbotron>
+    </Container>
   );
 }
