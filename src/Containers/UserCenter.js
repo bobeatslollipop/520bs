@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Tab, Nav, Container, Jumbotron, Card, ListGroup, Form, Button, CardDeck, Modal } from "react-bootstrap";
 import { useFormFields } from "../libs/hooksLib";
 import "./UserCenter.css";
-import { Auth, changeUserMajor, changeUserIntro, changeUserResidence, changeFeedback } from "../firebase";
-import { LogoutOutlined } from "@ant-design/icons";
-import Feedback from "react-bootstrap/esm/Feedback";
-import Select from "react-dropdown-select";
+import { Auth, db } from "../firebase";
 import MultiSelect from "react-multi-select-component"
 import { getUserById } from '../firebase'
 
@@ -13,12 +10,18 @@ import { getUserById } from '../firebase'
 export default function UserCenter(props) {
 
   const [isLoading, setIsLoading] = useState(true)
-  const [data, setData] = useState(null)
+  const [name, setName] = useState(null)
+  const [email, setEmail] = useState(null)
+  const [gender, setGender] = useState(null)
+  const [introduction, setIntroduction] = useState(null)
 
   useEffect(() => {
     getUserById(Auth.currentUser.email)
     .then(doc => {
-      setData(doc);
+      setName(doc.name);
+      setEmail(doc.email);
+      setGender(doc.gender);
+      setIntroduction(doc.intro);
       setIsLoading(false);
     }).catch(err => alert(err));
   }, [])
@@ -68,15 +71,18 @@ export default function UserCenter(props) {
   }
 
   function Profile() {
-    const [gender, setGender] = useState("");
-    const [intro, setIntro] = useState("");
+    const [gend, setGend] = useState(gender ? gender : "");
+    const [intro, setIntro] = useState(introduction ? introduction : "");
 
     function handleSubmit(e){
-      //do stuff
+      if (intro !== introduction || gend !== gender)
+        db.collection("Users").doc(Auth.currentUser.email).update({gender: gend, intro: intro})
+        .then(window.location.reload())
+        .catch(e => alert(e));
     }
 
     return(
-      !isLoading && 
+      !isLoading &&
       <Container style={{backgroundColor: "white", borderRadius:"15px", padding: "15px"}}>
         <Container style={{textAlign: "center"}}>
           <p><strong>User Profile</strong></p>
@@ -86,11 +92,11 @@ export default function UserCenter(props) {
           <Form.Row>
             <Form.Group as={Col} controlId="formGridName">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="name" placeholder={data.name} disabled/>
+              <Form.Control type="name" placeholder={name} disabled/>
             </Form.Group>
             <Form.Group as={Col} controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder={data.email} disabled/>
+              <Form.Control type="email" placeholder={email} disabled/>
             </Form.Group> 
           </Form.Row>
 
@@ -100,7 +106,7 @@ export default function UserCenter(props) {
               <Form.Control 
                 placeholder="It's the 21st century now, gender doesn't have to be selected"
                 value={gender}
-                onChange={e => setGender(e.target.value)}
+                onChange={e => setGend(e.target.value)}
               />
             </Form.Group>
           </Form.Row>
@@ -114,14 +120,8 @@ export default function UserCenter(props) {
             rows="4"
             />
           </Form.Group>
-
-          <Form.Group id="formGridCheckbox">
-            <Form.Check type="checkbox" label="Check this" />
-          </Form.Group>
-
           <Button 
-          variant="primary" 
-          type="submit"
+          variant="primary"
           onClick={handleSubmit}>
             Submit
           </Button>

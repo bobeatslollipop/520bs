@@ -4,10 +4,10 @@ import { Col, Row, Tab, Nav, Container, Jumbotron, Card, ListGroup, Form, Button
 export default function FrontPage(props) {
   return (
     <Container style={{marginTop: "15px"}}>
-    <Jumbotron>
-      <h1>Front Page. Please Log In.</h1>
-      <p>Nothing is here yet.</p>
-    </Jumbotron>
-  </Container>
+      <Jumbotron>
+        <h1>Front Page. Please Log In.</h1>
+        <p>Nothing is here yet.</p>
+      </Jumbotron>
+    </Container>
   );
 }

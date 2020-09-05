@@ -18,11 +18,12 @@ import AlreadyLoggedIn from './Containers/ErrorPages/AlreadyLoggedIn'
 import NotLoggedIn from './Containers/ErrorPages/NotLoggedIn'
 import Match from './Containers/Match';
 import MatchUser from './Containers/MatchUser';
+import Friends from './Containers/Friends';
 
 export default function App() {
   const [user, setUser] = useState(Auth.currentUser)
   Auth.onAuthStateChanged(() => {
-    if (Auth.currentUser != user)
+    if (Auth.currentUser !== user)
       setUser(Auth.currentUser);
   });
 
@@ -39,6 +40,8 @@ export default function App() {
           <UserCenter {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />} />
         <Route exact path="/request" render={(props) => user ?
           <Request {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>
+        <Route exact path="/friends" render={(props) => user ?
+          <Friends {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>
         <Route exact path="/match" render={(props) => user ?
           <Match {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>    
         <Route exact path="/matchuser" render={(props) => user ?
@@ -69,7 +72,7 @@ function NavLoggedIn() {
         <Navbar.Brand href="/">520bs</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="/request" className="NavItem">Requests</Nav.Link>
-          <Nav.Link href="/request" className="NavItem">Friends</Nav.Link>
+          <Nav.Link href="/friends" className="NavItem">Friends</Nav.Link>
           <Nav.Link href="/match" className="NavItem">Match</Nav.Link>
           <Nav.Link href="/matchuser" className="NavItem">Guess</Nav.Link>
         </Nav>

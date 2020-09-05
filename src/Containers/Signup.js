@@ -45,7 +45,9 @@ export default function Signup(props) {
   function createUserData() {
     db.collection("Users").doc(fields.email).set({
       name: fields.name,
-      email: fields.email
+      email: fields.email,
+      gender: "",
+      intro: ""
     }).then(() => {
       alert("User '" +fields.name + "' created with email '" + fields.email +"'");
       props.history.replace("/");
@@ -73,7 +75,7 @@ export default function Signup(props) {
   }
 
   return (
-    <Container style={{marginTop: "15px"}}>
+    <Container style={{backgroundColor: "white", borderRadius:"15px", padding: "15px"}}>
       <Jumbotron><Row>
         <Col></Col>
         <Col>

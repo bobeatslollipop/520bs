@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Tab, Nav, Container, Jumbotron, Card, ListGroup, Form, Button, CardDeck, Modal } from "react-bootstrap";
 import { useFormFields } from "../libs/hooksLib";
 import "./UserCenter.css";
-import { Auth, changeUserMajor, changeUserIntro, changeUserResidence, changeFeedback } from "../firebase";
+import { Auth } from "../firebase";
 import { LogoutOutlined } from "@ant-design/icons";
 import Feedback from "react-bootstrap/esm/Feedback";
 import Select from "react-dropdown-select";
