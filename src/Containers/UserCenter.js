@@ -1,39 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Tab, Nav, Container, Jumbotron, Card, ListGroup, Form, Button, CardDeck } from "react-bootstrap";
+import { Col, Row, Tab, Nav, Container, Jumbotron, Card, ListGroup, Form, Button, CardDeck, Modal } from "react-bootstrap";
 import { useFormFields } from "../libs/hooksLib";
 import "./UserCenter.css";
 import { Auth, changeUserMajor, changeUserIntro, changeUserResidence, changeFeedback } from "../firebase";
 import { LogoutOutlined } from "@ant-design/icons";
 import Feedback from "react-bootstrap/esm/Feedback";
 import Select from "react-dropdown-select";
+import MultiSelect from "react-multi-select-component"
 
 
 export default function UserCenter(props) {
   return (
     <Container>
       <Jumbotron style={{marginTop: "25px"}} className="UserCenter">
-        <h1 style={{textAlign: "center"}}>User Center</h1>
+        <h1 style={{textAlign: "center", marginBottom: "3%"}}>User Center</h1>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
           <Row>
             <Col sm={3} className="NavList" style={{height: "85%"}}>
               <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey="first">User Profile</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="second" >Feedback</Nav.Link>
-                </Nav.Item>
+                <Nav.Link eventKey="first">User Profile</Nav.Link>
+
+                <Nav.Link eventKey="second" >你的人设</Nav.Link>
+
+                <Nav.Link eventKey="third" >Feedback</Nav.Link>
               </Nav>
             </Col>
             
             <Col sm={9}>
               <Tab.Content>
-                <Tab.Pane eventKey="first">
-                  <Profile/>                  
-                </Tab.Pane>
-                <Tab.Pane eventKey="second">
-                  <Feedback/>
-                </Tab.Pane>
+                <Tab.Pane eventKey="first"><Profile/></Tab.Pane>
+
+                <Tab.Pane eventKey="second"><Information/></Tab.Pane>
+
+                <Tab.Pane eventKey="third"><Feedback/></Tab.Pane>
               </Tab.Content>
             </Col>
           </Row>
@@ -50,8 +49,6 @@ export default function UserCenter(props) {
     Auth.signOut()
     props.history.replace('/')
   }
-  
-
 
   function Profile() {
     const [major, setMajor] = useState(null);
@@ -109,19 +106,18 @@ export default function UserCenter(props) {
         <hr></hr>
         <Form>
           <Form.Row>
+           <Form.Group as={Col} controlId="formGridName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="name" placeholder="Placeholder name" disabled/>
+            </Form.Group>
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" disabled/>
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" disabled/>
+              <Form.Control type="email" placeholder={Auth.currentUser.email} disabled/>
             </Form.Group>
           </Form.Row>
 
           <Form.Group controlId="formGridMajor">
-            <Form.Label>Major</Form.Label>
+            <Form.Label>Country of residence</Form.Label>
             <Select options={Countries} placeholder={props.userMajor} />
           </Form.Group>
 
@@ -133,33 +129,8 @@ export default function UserCenter(props) {
              />
           </Form.Group>
 
-          <Form.Row>
-            <Form.Group as={Col} controlId="formGridResidence">
-              <Form.Label>Dorm/Residence</Form.Label>
-              <Form.Control 
-              placeholder={props.userResidence}
-              onChange={e=>{setResidence(e.target.value);}}
-              />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridYear">
-              <Form.Label>Year</Form.Label>
-              <Form.Control 
-              placeholder={props.userYear}
-              onChange={e=>{setYear(e.target.value);}}
-              disabled
-              />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridZip">
-              <Form.Label>What to put here?</Form.Label>
-              <Form.Control 
-              disabled/>
-            </Form.Group>
-          </Form.Row>
-
           <Form.Group id="formGridCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
+            <Form.Check type="checkbox" label="Check this" />
           </Form.Group>
 
           <Button 
@@ -173,6 +144,74 @@ export default function UserCenter(props) {
     );
   }
 
+  function Information() {
+    function FieldOfInterest({field}) {
+      const [show, setShow] = useState(false);
+    
+      const handleClose = () => setShow(false);
+      const handleShow = () => setShow(true);
+      const handleSave = () => {
+        setShow(false);
+        // save changes
+      }
+
+      // Make this an import
+      const options = [
+        { label: "Pop", value: 0},
+        { label: "Hip hop", value: 1 }
+      ]
+      const [selected, setSelected] = useState([]);
+      console.log(selected)
+    
+      return (
+        <>
+          <Button variant="primary" onClick={handleShow} block>
+            {field}
+          </Button>
+    
+          <Modal show={show} onHide={handleClose} size="lg" centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Select your favorite {field}!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <MultiSelect
+                options={options}
+                value={selected}
+                onChange={setSelected}
+                labelledBy={"Select up to 5 items"}
+              />
+              <br/>
+              <Form.Control as="textarea" rows="5" placeholder="Descriptions and examples and stuff"/>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleSave}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      );
+    }
+
+    return (
+      <Container style={{backgroundColor:"white", borderRadius:"15px", padding: "15px"}}>
+        <Container style={{textAlign: "center"}}>
+          <p><strong>你的人设</strong></p>
+        </Container>
+        <hr></hr>
+
+        <Row>
+          <Col><FieldOfInterest field="Music" /></Col>
+          <Col><FieldOfInterest field="Books" /></Col>
+          <Col><FieldOfInterest field="Movies" /></Col>
+        </Row>
+
+      </Container>
+    );
+  }
 
   function Feedback() {
     const [feedback, setFeedback] = useState(null);

@@ -9,7 +9,7 @@ export default function Home(props) {
   const [matchWindow, setMW] = useState(false)
   const [contactWindow, setCW] = useState(false)
   
-  
+  console.log(props)
   
   return (
     <div>

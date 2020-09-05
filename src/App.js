@@ -17,9 +17,8 @@ import NotFound from './Containers/ErrorPages/NotFound'
 import AlreadyLoggedIn from './Containers/ErrorPages/AlreadyLoggedIn'
 import NotLoggedIn from './Containers/ErrorPages/NotLoggedIn'
 
-function App() {
+export default function App() {
   const [user, setUser] = useState(Auth.currentUser)
-
   Auth.onAuthStateChanged(() => {
     if (Auth.currentUser != user)
       setUser(Auth.currentUser);
@@ -38,9 +37,6 @@ function App() {
           <UserCenter {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />} />
         <Route exact path="/request" render={(props) => user ?
           <Request {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>
-
-        <Route exact path="/alreadyloggedin" render={(props) => <AlreadyLoggedIn {...props} {...appProps} />}/>
-        <Route exact path="/notloggedin" render={(props) => <NotLoggedIn {...props} {...appProps} />}/>
         
         { /* Finally, catch all unmatched routes */ }
         <Route component={NotFound} />
@@ -51,7 +47,7 @@ function App() {
   
   return (
     <div className="App">
-      {user ? NavLoggedIn() : NavNotLoggedIn()}
+      {user ? <NavLoggedIn /> : <NavNotLoggedIn />}
 
       <Router>
         <Routes />
@@ -60,7 +56,7 @@ function App() {
   );
 }
 
-function NavLoggedIn(appProps) {
+function NavLoggedIn() {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
@@ -80,7 +76,7 @@ function NavLoggedIn(appProps) {
   );
 }
 
-function NavNotLoggedIn(appProps) {
+function NavNotLoggedIn() {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
@@ -100,5 +96,3 @@ function NavNotLoggedIn(appProps) {
     </Navbar>
   );
 }
-
-export default App;

@@ -15,17 +15,17 @@ export default function NotFound(props) {
   }
 
   return(
-      <Jumbotron fluid>
-        <Container>
-          <h1>Oops!</h1>
-            <p>
-              This page requires you to log in first!
-            </p>
-            <br/>
-            <p>
-              Redirecting to front page in {counter} seconds...
-            </p>
-        </Container>
+    <Container>
+      <Jumbotron>
+        <h1>Oops!</h1>
+        <p>
+          This page requires you to log in first!
+        </p>
+        <br/>
+        <p>
+          Redirecting to front page in {counter} seconds...
+        </p>
       </Jumbotron>
+    </Container>
   );
 }

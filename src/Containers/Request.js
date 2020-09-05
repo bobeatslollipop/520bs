@@ -32,7 +32,7 @@ export default function Request() {
         <div>
             <h1>This is Request Page
             </h1>
-            <buttun style = {btnStyle} onClick = {addRequest}>Generate Request</buttun>
+            <button style = {btnStyle} onClick = {addRequest}>Generate Request</button>
             <Requests requests = {state.requests}
                       delRequest = {delRequest}/>
         </div>
