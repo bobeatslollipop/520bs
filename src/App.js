@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
@@ -72,6 +72,7 @@ function NavLoggedIn() {
           <Nav.Link href="/request" className="NavItem">Friends</Nav.Link>
           <Nav.Link href="/match" className="NavItem">Match</Nav.Link>
           <Nav.Link href="/matchuser" className="NavItem">Guess</Nav.Link>
+          <Nav.Link href="/friends" className="NavItem">Friends</Nav.Link>
         </Nav>
         <Nav className="mr-right">
           <Nav.Link href="/usercenter" className="NavItem">
