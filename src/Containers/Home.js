@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Request from './Request'
 import Modal from 'react-modal'
 import firebase from './../firebase';
+import Match from "./Components/Match"
 import { Col, Row, Tab, Nav, Container, Jumbotron, Card, ListGroup, Form, Button, CardDeck } from "react-bootstrap";
 
 export default function Home(props) {
@@ -32,7 +33,7 @@ export default function Home(props) {
         </Modal>
 
         <Modal isOpen={matchWindow} onRequestClose={() => setMW(false)}>
-          <button href="/match">Start Match</button>
+          <Match/>
           <button onClick = {()=>setMW(false)}>Close</button>
         </Modal>
 

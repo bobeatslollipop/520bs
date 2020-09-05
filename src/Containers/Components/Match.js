@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Matchs from './Matchs'
 import { Container, Jumbotron } from "react-bootstrap";
+import Modal from 'react-modal'
 
 export default function Match() {
     var Chance = require('chance');
@@ -13,6 +14,7 @@ export default function Match() {
             )]}
         )
     }
+
 
     function refresh(){
         setState({results:
