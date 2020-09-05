@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
@@ -16,6 +16,7 @@ import Request from './Containers/Request'
 import NotFound from './Containers/ErrorPages/NotFound'
 import AlreadyLoggedIn from './Containers/ErrorPages/AlreadyLoggedIn'
 import NotLoggedIn from './Containers/ErrorPages/NotLoggedIn'
+import Friends from './Containers/Friends';
 
 export default function App() {
   const [user, setUser] = useState(Auth.currentUser)
@@ -37,6 +38,8 @@ export default function App() {
           <UserCenter {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />} />
         <Route exact path="/request" render={(props) => user ?
           <Request {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>
+        <Route exact path="/friends" render={(props) => user ?
+          <Friends {...props} {...appProps} /> : <NotLoggedIn {...props} {...appProps} />}/>
         
         { /* Finally, catch all unmatched routes */ }
         <Route component={NotFound} />
@@ -64,7 +67,7 @@ function NavLoggedIn() {
         <Navbar.Brand href="/">520bs</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="/request" className="NavItem">Requests</Nav.Link>
-          <Nav.Link href="/request" className="NavItem">Friends</Nav.Link>
+          <Nav.Link href="/friends" className="NavItem">Friends</Nav.Link>
         </Nav>
         <Nav className="mr-right">
           <Nav.Link href="/usercenter" className="NavItem">
