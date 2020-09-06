@@ -5,8 +5,8 @@ export default function FrontPage(props) {
   return (
     <Container style={{marginTop: "15px"}}>
       <Jumbotron>
-        <h1>Front Page. Please Log In.</h1>
-        <p>Nothing is here yet.</p>
+        <h1>Welcome to Match & Guess!</h1>
+        <p>Please log in to see more content. </p>
       </Jumbotron>
     </Container>
   );

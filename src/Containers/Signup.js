@@ -47,7 +47,9 @@ export default function Signup(props) {
       name: fields.name,
       email: fields.email,
       gender: "",
-      intro: ""
+      intro: "",
+      interest: "",
+      personalities: ""
     }).then(() => {
       alert("User '" +fields.name + "' created with email '" + fields.email +"'");
       props.history.replace("/");
